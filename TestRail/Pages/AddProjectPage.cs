@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using TestRail.Element;
+using TestRail.Models;
 
 namespace TestRail.Pages
 {
@@ -38,7 +39,8 @@ namespace TestRail.Pages
         public Checkbox TestCaseStatusesEnabledCheckbox() => new(Driver, testCaseStatusesEnabledCheckbox);
         public UIElement AddProjectButton() => new(Driver, addProjectButton);
 
-        public void SendProjectName(string projectName) => ProjectNameInput().SendKeys(projectName);
+        public void SendProjectName(string projectName) => 
+            ProjectNameInput().SendKeys(projectName);
         public void SendAnnouncement(string announcement) => AnnouncementInput().SendKeys(announcement);
 
         public void ShowAnnouncementCheckboxCheck(bool value)

@@ -52,7 +52,6 @@ namespace TestRail.Element
                 _actions
                     .MoveToElement(_element)
                     .Click()
-                    .SendKeys("")
                     .SendKeys(text)
                     .Build()
                     .Perform();
