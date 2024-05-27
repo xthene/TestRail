@@ -2,7 +2,7 @@
 using TestRail.Steps;
 using TestRail.Utils;
 
-namespace TestRail.Tests
+namespace TestRail.Tests.UI
 {
     public class AddProjectTest : BaseTest
     {
@@ -10,8 +10,11 @@ namespace TestRail.Tests
         public void Setup()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url);
-            UserStep.SuccessfulLogin(new UserModel() { UserName = Configurator.ReadConfiguration().Username, Password = Configurator.ReadConfiguration().Password })
-                .AddProjectButtonClick();
+            UserStep.SuccessfulLogin(new UserModel()
+            {
+                UserName = Environment.GetEnvironmentVariable("TESTRAIL_EMAIL"),
+                Password = Environment.GetEnvironmentVariable("TESTRAIL_PASSWORD")
+            }).AddProjectButtonClick();
         }
 
         [Test]

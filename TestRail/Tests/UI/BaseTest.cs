@@ -1,9 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using DotNetEnv;
+using OpenQA.Selenium;
+using System.Reflection;
 using TestRail.Core;
 using TestRail.Pages;
 using TestRail.Steps;
 
-namespace TestRail.Tests
+namespace TestRail.Tests.UI
 {
     public class BaseTest
     {
@@ -13,6 +15,14 @@ namespace TestRail.Tests
         public UserStep UserStep { get; set; }
         public ProjectStep ProjectStep { get; set; }
         public AddProjectPage AddProjectPage { get; set; }
+
+        [OneTimeSetUp]
+        public static void SetupEnvVariables()
+        {
+            var pathToEnvFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                ".env");
+            Env.Load(pathToEnvFile);
+        }
 
         [SetUp]
         public void Setup()
