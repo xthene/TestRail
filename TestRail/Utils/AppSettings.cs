@@ -8,5 +8,6 @@
         public string? Username { get; set; }
         public string? Password { get; set; }
         public string ProjectName { get; set; }
+        public DbSettings DbSettings { get; set; }
     }
 }
