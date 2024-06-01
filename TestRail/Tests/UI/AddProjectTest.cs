@@ -18,6 +18,7 @@ namespace TestRail.Tests.UI
         }
 
         [Test]
+        [Category("Positive")]
         public void CheckLimitValuesProjectNameField_1Symbol()
         {
             var name = DataHelper.CreateStringByLength(1);
@@ -30,6 +31,7 @@ namespace TestRail.Tests.UI
         }
 
         [Test]
+        [Category("Positive")]
         public void CheckLimitValuesProjectNameField_250Symbols()
         {
             var name = DataHelper.CreateStringByLength(250);
@@ -42,6 +44,7 @@ namespace TestRail.Tests.UI
         }
 
         [Test]
+        [Category("Negative")]
         public void CheckLimitValuesProjectNameField_251Symbols()
         {
             var name = DataHelper.CreateStringByLength(251);
