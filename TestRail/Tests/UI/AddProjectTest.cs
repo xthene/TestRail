@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using TestRail.Connector;
 using TestRail.Models;
 using TestRail.Steps;
@@ -23,9 +24,12 @@ namespace TestRail.Tests.UI
         }
 
         [Test]
-        public void TestDbConnection()
+        public async Task TestDbConnection()
         {
             var list = connector.MongoClient.ListDatabaseNames();
+            var collection = connector.MongoClient.GetDatabase("TestRail");
+            var coll = collection.GetCollection<MilestoneModel>("Milestones");
+            var milestones = await coll.Find(new BsonDocument()).ToListAsync();
 
             Assert.That(list.ToList().Count, Is.GreaterThan(1));    
 

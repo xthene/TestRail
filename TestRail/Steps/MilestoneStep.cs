@@ -37,15 +37,15 @@ namespace TestRail.Steps
             else
                 AddMilestonePage.DescriptionInput().SendKeys($"{milestone.Description}");
 
-            if (milestone.StartDate == null)
-                AddMilestonePage.StartDateInput().SendKeys("");
-            else
-                AddMilestonePage.StartDateInput().SendKeys($"{milestone.StartDate}");
+            //if (milestone.StartDate == null)
+            //    AddMilestonePage.StartDateInput().SendKeys("");
+            //else
+            //    AddMilestonePage.StartDateInput().SendKeys($"{milestone.StartDate}");
 
-            if (milestone.EndDate == null)
-                AddMilestonePage.EndDateInput().SendKeys("");
-            else
-                AddMilestonePage.EndDateInput().SendKeys($"{milestone.EndDate}");
+            //if (milestone.EndDate == null)
+            //    AddMilestonePage.EndDateInput().SendKeys("");
+            //else
+            //    AddMilestonePage.EndDateInput().SendKeys($"{milestone.EndDate}");
 
             AddMilestonePage.SetIsCompleted(milestone.IsCompleted);
 

@@ -5,14 +5,14 @@ namespace TestRail.Pages
 {
     public class AddMilestonePage : BasePage
     {
-        private readonly By nameInput = By.XPath("input[@id='name']");
-        private readonly By referencesInput = By.XPath("input[@id='reference']");
-        private readonly By descriptionInput = By.XPath("input[@id='description_display']");
-        private readonly By startDateInput = By.XPath("input[@id='start_on']");
-        private readonly By endDateInput = By.XPath("input[@id='due_on']");
-        private readonly By isCompletedinput = By.XPath("input[@id='is_completed']");
+        private readonly By nameInput = By.XPath("//input[@id='name']");
+        private readonly By referencesInput = By.XPath("//input[@id='reference']");
+        private readonly By descriptionInput = By.XPath("//div[@id='description_display']");
+        private readonly By startDateInput = By.XPath("//input[@id='start_on']");
+        private readonly By endDateInput = By.XPath("//input[@id='due_on']");
+        private readonly By isCompletedinput = By.XPath("//input[@id='is_completed']");
 
-        private readonly By acceptButton = By.XPath("button[@id='accept']");
+        private readonly By acceptButton = By.XPath("//button[@id='accept']");
 
         private string _endPoint = "index.php?/milestones/add/292";
 

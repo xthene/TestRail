@@ -18,9 +18,10 @@ namespace TestRail.Pages
 
         public abstract string GetEndpoint();
 
-        public override void ExecuteLoad()
+        protected override void ExecuteLoad()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url.Trim() + GetEndpoint());
         }
+
     }
 }
