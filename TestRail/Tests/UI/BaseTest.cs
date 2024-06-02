@@ -14,7 +14,9 @@ namespace TestRail.Tests.UI
         public NavigationStep NavigationStep { get; set; }
         public UserStep UserStep { get; set; }
         public ProjectStep ProjectStep { get; set; }
+        public MilestoneStep MilestoneStep { get; set; }
         public AddProjectPage AddProjectPage { get; set; }
+        public AddMilestonePage AddMilestonePage { get; set; }
 
         [OneTimeSetUp]
         public static void SetupEnvVariables()
@@ -32,8 +34,10 @@ namespace TestRail.Tests.UI
             NavigationStep = new NavigationStep(Driver);
             UserStep = new UserStep(Driver);
             ProjectStep = new ProjectStep(Driver);
+            MilestoneStep = new MilestoneStep(Driver);
 
             AddProjectPage = new AddProjectPage(Driver);
+            AddMilestonePage = new AddMilestonePage(Driver);
         }
 
         [TearDown]
