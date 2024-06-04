@@ -3,7 +3,7 @@ using TestRail.Services_API;
 
 namespace TestRail.Tests.API
 {
-    internal class BaseApiTest
+    public class BaseApiTest
     {
         protected ApiServices ApiServices { get; private set; }
         protected ApiSteps ApiSteps { get; private set; }
