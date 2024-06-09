@@ -2,6 +2,9 @@ name: Selenium and API tests
 run-name: Run ${{ github.event.inputs.test_category }} tests
 
 on: 
+  push:
+   branches: 
+   - main
   schedule:
   - cron: '00 20 * * *'
   workflow_dispatch:
