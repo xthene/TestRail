@@ -13,6 +13,7 @@ namespace TestRail.Pages
         private readonly By isCompletedinput = By.XPath("//input[@id='is_completed']");
 
         private readonly By acceptButton = By.XPath("//button[@id='accept']");
+        private readonly By cancelButton = By.XPath("//a[@data-testid='milestoneButtonCancel']");
 
         private readonly By errorMessage = By.XPath("//div[contains(@class, 'message-error')]");
 
@@ -27,6 +28,7 @@ namespace TestRail.Pages
         public UIElement EndDateInput() => new UIElement(Driver, endDateInput);
         public Checkbox IsCompleted() => new Checkbox(Driver, isCompletedinput);
         public Button AcceptButton() => new Button(Driver, acceptButton);
+        public Button CancelButton() => new Button(Driver, cancelButton);
         public UIElement MessageError() => new UIElement(Driver, errorMessage);
 
         public void SetName(string name) => NameInput().SendKeys(name);
@@ -43,6 +45,7 @@ namespace TestRail.Pages
         }
         public void AcceptButtonClick() => AcceptButton().Click();
         public string MessageErrorText() => MessageError().Text;
+        public bool CancelButtonIsEnabled() => CancelButton().Enabled;
 
         public AddMilestonePage(IWebDriver driver, bool openPageByUrl = true) : base(driver, openPageByUrl)
         {
@@ -56,7 +59,7 @@ namespace TestRail.Pages
 
         protected override bool EvaluateLoadedStatus()
         {
-            throw new NotImplementedException();
+            return CancelButtonIsEnabled();
         }
     }
 }

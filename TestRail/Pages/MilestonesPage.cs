@@ -5,6 +5,7 @@ namespace TestRail.Pages
 {
     public class MilestonesPage : BasePage
     {
+        private readonly By _addMilestoneButton = By.Id("navigation-milestones-add");
         private readonly By _messageSuccess = By.XPath("//div[@data-testid='messageSuccessDivBox']");
         private readonly By _deleteButton = By.XPath("//a[contains(text(), 'test')]//ancestor::div//following-sibling::div//child::a[contains(@class, 'deleteLink')]");
         private readonly By _deleteDialog = By.XPath("//div[@id='deleteDialog']");
@@ -21,6 +22,7 @@ namespace TestRail.Pages
             Driver = driver;
         }
 
+        public Button AddMilestoneButton() => new(Driver, _addMilestoneButton);
         public UIElement MessageSuccess() => new(Driver, _messageSuccess);
         public Button DeleteButton() => new(Driver, _deleteButton);
         public UIElement DeleteDialog() => new(Driver, _deleteDialog);
@@ -37,6 +39,7 @@ namespace TestRail.Pages
             return result;
         }
 
+        public bool IsAddMilestoneButtonEnabled() => AddMilestoneButton().Enabled;
         public string MessageSuccessText() => MessageSuccess().Text;
         public void DeleteButtonClick() => DeleteButton().Click();
         public string DeleteDialogMessageText() => DeleteDialogMessage().Text;
@@ -60,7 +63,7 @@ namespace TestRail.Pages
 
         protected override bool EvaluateLoadedStatus()
         {
-            throw new NotImplementedException();
+            return IsAddMilestoneButtonEnabled();
         }
     }
 }

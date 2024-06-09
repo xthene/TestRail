@@ -31,13 +31,6 @@ namespace TestRail.Pages
         public void LoginButtonClick() => LoginButton().Click();
         public string GetMessageText() => Message().Text;
 
-        public void Login(string username, string password)
-        {
-            UsernameInput().SendKeys(username);
-            PasswordInput().SendKeys(password);
-            LoginButtonClick();
-        }
-
         protected override bool EvaluateLoadedStatus()
         {
             return LoginButton().Enabled;

@@ -64,12 +64,13 @@ namespace TestRail.Pages
 
         public void AccessTabClick() => Driver.FindElement(accessTab).Click();
         public void AddProjectButtonClick() => Driver.FindElement(addProjectButton).Click();
+        public bool AddProjectButtonIsEnabled() => AddProjectButton().Enabled;
 
         public SelectElement RoleSelectElement() => new(Driver.FindElement(roleSelect));
 
         protected override bool EvaluateLoadedStatus()
         {
-            return AddProjectButton().Enabled;
+            return AddProjectButtonIsEnabled();
         }
     }
 }

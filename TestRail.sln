@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestRail", "TestRail\TestRa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E74CA31A-208A-497C-A275-3F588A7A3DCF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{5255189E-31C8-40D0-8007-F9A2074BC75A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{81A97130-BA3A-4E96-B2D2-23DBCF2D91A7}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet-selenium.yml = .github\workflows\dotnet-selenium.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +27,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5255189E-31C8-40D0-8007-F9A2074BC75A} = {E74CA31A-208A-497C-A275-3F588A7A3DCF}
+		{81A97130-BA3A-4E96-B2D2-23DBCF2D91A7} = {5255189E-31C8-40D0-8007-F9A2074BC75A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7DCB2B1-2642-450A-94A6-92DEA0AB6A18}

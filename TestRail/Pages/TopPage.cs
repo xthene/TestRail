@@ -10,6 +10,7 @@ namespace TestRail.Pages
 
         public TopPage(IWebDriver driver, bool openPageByUrl = false) : base(driver, openPageByUrl)
         {
+            Driver = driver;
         }
 
         public UIElement InProgressLink() => new(Driver, _inProgressLink);
@@ -18,6 +19,7 @@ namespace TestRail.Pages
         public void InProgressLinkClick() => InProgressLink().Click();
         public string InProgressMessageTitleText() =>
             InProgressMessageTitle().Text;
+        public bool IsInProgreeLinkDisplayed() => InProgressLink().Displayed;
 
         public override string GetEndpoint()
         {
@@ -26,7 +28,7 @@ namespace TestRail.Pages
 
         protected override bool EvaluateLoadedStatus()
         {
-            throw new NotImplementedException();
+            return IsInProgreeLinkDisplayed();
         }
     }
 }
