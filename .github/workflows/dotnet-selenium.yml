@@ -1,15 +1,19 @@
-name: Selenium tests
+name: Selenium and API tests
+run-name: Run ${{ github.event.inputs.test_category }} tests
 
-on:
- workflow_dispatch:
-  inputs:
-   test_category:
-    description: "Select test category"
-    type: choice
-    options:
-    - Positive
-    - Negative
-    required: true
+on: 
+  schedule:
+  - cron: '00 20 * * *'
+  workflow_dispatch:
+   inputs:
+    test_category:
+     description: 'Select test category'
+     type: choice
+     options:
+     - Positive
+     - Negative
+     required: true
+  
 
 jobs:
 
@@ -19,11 +23,10 @@ jobs:
       matrix:
         configuration: [Debug]
 
-    runs-on: ubuntu-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: ubuntu-latest  
 
     steps:
-    - name: Checkout
+    - name: Checkout Repo
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -34,16 +37,12 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Set up environment variables 
-      run: |
-       echo "TESTRAIL_EMAIL"=${{secrets.TESTRAIL_EMAIL}} >> $GITHUB_ENV
-       echo "TESTRAIL_PASSWORD"=${{secrets.TESTRAIL_PASSWORD}} >> $GITHUB_ENV
-
     # Execute all unit tests in the solution
-    - name: Execute positive selenium tests
+    - name: Execute Positive tests
       if: github.event.inputs.test_category == 'Positive'
       run: dotnet test --filter Category=Positive
-    - name: Execute negative selenium tests
+      
+    - name: Execute Negative tests
       if: github.event.inputs.test_category == 'Negative'
       run: dotnet test --filter Category=Negative
 
@@ -52,8 +51,8 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-       ref: gh-pages
-       path: gh-pages
+          ref: gh-pages
+          path: gh-pages
 
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.7
@@ -61,7 +60,7 @@ jobs:
       with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: TestRail/bin/Debug/net8.0/allure-results
+          allure_results: WebDriverProject/bin/Debug/net6.0/allure-results
 
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v3
@@ -70,3 +69,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
+
+    - name: Publish artifacts
+      uses: actions/upload-artifact@v3
+      with:
+          name: project
+          path: WebDriverProject/bin/Debug
