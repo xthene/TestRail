@@ -60,24 +60,12 @@ namespace TestRail.Pages
         }
 
         public void SuiteModeRadioButtonSelectByText(string text) => SuiteModeRadioButton().SelectByText(text);
+        public void SuiteModeRadioButtonSelectByIndex(int index) => SuiteModeRadioButton().SelectByIndex(index);
 
         public void AccessTabClick() => Driver.FindElement(accessTab).Click();
         public void AddProjectButtonClick() => Driver.FindElement(addProjectButton).Click();
 
         public SelectElement RoleSelectElement() => new(Driver.FindElement(roleSelect));
-
-
-        public void AddProjectWithRequiredFields(ProjectModel project)
-        {
-            SendProjectName(project.Name);
-            SendAnnouncement(project.Announcement);
-            ShowAnnouncementCheckboxCheck(project.IsShowAnnouncement);
-            SuiteModeRadioButtonSelectByText(project.ProjectType);
-            TestCaseStatusesEnabledCheckboxCheck(true);
-            AccessTabClick();
-            RoleSelectElement().SelectByText(project.DefaultAccessRole);
-            AddProjectButtonClick();
-        }
 
         protected override bool EvaluateLoadedStatus()
         {

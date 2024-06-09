@@ -1,8 +1,12 @@
-﻿using RestSharp;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestSharp;
 using TestRail.Services_API;
 
 namespace TestRail.Tests.API
 {
+    [AllureNUnit]
+    [Parallelizable(ParallelScope.Fixtures)]
     public class BaseApiTest
     {
         protected ApiServices ApiServices { get; private set; }
@@ -11,6 +15,7 @@ namespace TestRail.Tests.API
         private RestClientOptions _restOption;
 
         [SetUp]
+        [AllureBefore("RestClient set up")]
         public void SetupApi()
         {
             ApiServices = new ApiServices();
@@ -22,6 +27,7 @@ namespace TestRail.Tests.API
         }
 
         [TearDown]
+        [AllureAfter("RestClient dispose")]
         public void TearDownApi()
         {
             Client.Dispose();

@@ -7,7 +7,9 @@ using TestRail.Utils;
 
 namespace TestRail.Tests.UI
 {
-    public class AddProjectTest : BaseTest
+    [TestFixture]
+    [Category("UI")]
+    public class ProjectTest : BaseTest
     {
         DbConnector connector;
         [SetUp]
@@ -21,18 +23,6 @@ namespace TestRail.Tests.UI
                 UserName = Environment.GetEnvironmentVariable("TESTRAIL_EMAIL"),
                 Password = Environment.GetEnvironmentVariable("TESTRAIL_PASSWORD")
             }).AddProjectButtonClick();
-        }
-
-        [Test]
-        public async Task TestDbConnection()
-        {
-            var list = connector.MongoClient.ListDatabaseNames();
-            var collection = connector.MongoClient.GetDatabase("TestRail");
-            var coll = collection.GetCollection<MilestoneModel>("Milestones");
-            var milestones = await coll.Find(new BsonDocument()).ToListAsync();
-
-            Assert.That(list.ToList().Count, Is.GreaterThan(1));    
-
         }
 
         [Test]

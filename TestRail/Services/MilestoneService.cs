@@ -19,11 +19,16 @@ namespace TestRail.Services
             milestonesCollection = dbConnector.MongoDb.GetCollection<MilestoneModel>("Milestones");
         }
 
-        public async Task<List<MilestoneModel>> GetMilestones() => 
+        public async Task<List<MilestoneModel>> GetMilestones() =>
             await milestonesCollection.Find(new BsonDocument()).ToListAsync();
 
-        public async Task<MilestoneModel> GetMilestoneByid(string id) =>
-            await milestonesCollection.Find(Builders<MilestoneModel>.Filter.Eq("Name", id))
-            .FirstOrDefaultAsync();
+        public async Task<MilestoneModel> GetMilestoneById(string id)
+        {
+            var objId = new ObjectId(id);
+            var result = await milestonesCollection.Find(Builders<MilestoneModel>.Filter.Eq("_id", objId))
+                .FirstOrDefaultAsync();
+
+            return result;
+    }
     }
 }

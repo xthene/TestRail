@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using TestRail.Models;
 using TestRail.Pages;
 
 namespace TestRail.Steps
@@ -11,6 +12,12 @@ namespace TestRail.Steps
         {
             _driver = driver;
             _addProjectPage = new AddProjectPage(driver);
+        }
+
+        public void AddProject(ProjectModel project)
+        {
+            _addProjectPage.SendProjectName(project.Name);
+            _addProjectPage.AddProjectButtonClick();
         }
     }
 }

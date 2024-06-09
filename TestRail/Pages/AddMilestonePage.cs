@@ -14,6 +14,8 @@ namespace TestRail.Pages
 
         private readonly By acceptButton = By.XPath("//button[@id='accept']");
 
+        private readonly By errorMessage = By.XPath("//div[contains(@class, 'message-error')]");
+
         private string _endPoint = "index.php?/milestones/add/292";
 
         protected IWebDriver Driver { get; set; }
@@ -25,6 +27,7 @@ namespace TestRail.Pages
         public UIElement EndDateInput() => new UIElement(Driver, endDateInput);
         public Checkbox IsCompleted() => new Checkbox(Driver, isCompletedinput);
         public Button AcceptButton() => new Button(Driver, acceptButton);
+        public UIElement MessageError() => new UIElement(Driver, errorMessage);
 
         public void SetName(string name) => NameInput().SendKeys(name);
         public void SetReferences(string references) => ReferencesInput().SendKeys(references);
@@ -39,6 +42,7 @@ namespace TestRail.Pages
                 IsCompleted().Uncheck();
         }
         public void AcceptButtonClick() => AcceptButton().Click();
+        public string MessageErrorText() => MessageError().Text;
 
         public AddMilestonePage(IWebDriver driver, bool openPageByUrl = true) : base(driver, openPageByUrl)
         {
