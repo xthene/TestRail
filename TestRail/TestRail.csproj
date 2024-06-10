@@ -12,16 +12,12 @@
   <ItemGroup>
     <None Remove=".env" />
     <None Remove="allureConfig.json" />
-    <None Remove="appSettings..json" />
     <None Remove="NLog.config" />
     <None Remove="Resources\test.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="allureConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="appSettings..json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config">
