@@ -10,6 +10,7 @@ on:
      options:
      - API
      - UI
+     - Failed
      required: true
   
 
@@ -43,6 +44,10 @@ jobs:
     - name: Execute UI tests
       if: github.event.inputs.test_category == 'UI'
       run: dotnet test --filter Category=UI
+
+    - name: Execute UI tests
+      if: github.event.inputs.test_category == 'Failed'
+      run: dotnet test --filter Category=Failed
 
     - name: Load test report history
       uses: actions/checkout@v3

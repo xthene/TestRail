@@ -61,7 +61,6 @@ namespace TestRail.Tests.UI
         [AllureSeverity(SeverityLevel.normal)]
         [AllureSuite("UI tests")]
         [AllureDescription("try to add milestone with invalid date")]
-        [AllureStory("")]
         public void AddMilestoneWithInvalidDate()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
@@ -113,7 +112,7 @@ namespace TestRail.Tests.UI
         }
 
         [Test]
-        [Category("Negative")]
+        [Category("Failed")]
         [AllureSeverity(SeverityLevel.normal)]
         [AllureSuite("UI tests")]
         [AllureDescription("failed test")]
