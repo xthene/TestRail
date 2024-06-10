@@ -11,6 +11,7 @@ namespace TestRail.Pages
         private readonly By startDateInput = By.XPath("//input[@id='start_on']");
         private readonly By endDateInput = By.XPath("//input[@id='due_on']");
         private readonly By isCompletedinput = By.XPath("//input[@id='is_completed']");
+        private readonly By attachementInput = By.XPath("//div[@id='fancy_overlay']/preceding::input[@type='file']");
 
         private readonly By acceptButton = By.XPath("//button[@id='accept']");
         private readonly By cancelButton = By.XPath("//a[@data-testid='milestoneButtonCancel']");
@@ -30,6 +31,7 @@ namespace TestRail.Pages
         public Button AcceptButton() => new Button(Driver, acceptButton);
         public Button CancelButton() => new Button(Driver, cancelButton);
         public UIElement MessageError() => new UIElement(Driver, errorMessage);
+        public IWebElement AttachementInput() => Driver.FindElement(attachementInput);
 
         public void SetName(string name) => NameInput().SendKeys(name);
         public void SetReferences(string references) => ReferencesInput().SendKeys(references);
@@ -46,6 +48,21 @@ namespace TestRail.Pages
         public void AcceptButtonClick() => AcceptButton().Click();
         public string MessageErrorText() => MessageError().Text;
         public bool CancelButtonIsEnabled() => CancelButton().Enabled;
+        public void SendAttachement(string path) => AttachementInput().SendKeys(path);
+        public bool IsDescriptionInputAttachementListItemContains()
+        {
+            try
+            {
+                if (DescriptionInput().FindElement(By.ClassName("attachment-list-item")) != null)
+                    return true;
+                else
+                    return false;
+            }
+            catch (NoSuchElementException ex)
+            {
+                return false;
+            }
+        }
 
         public AddMilestonePage(IWebDriver driver, bool openPageByUrl = true) : base(driver, openPageByUrl)
         {

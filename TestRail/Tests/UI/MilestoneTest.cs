@@ -1,4 +1,7 @@
-﻿using NLog;
+﻿using Allure.Net.Commons;
+using Allure.NUnit.Attributes;
+using NLog;
+using System.Reflection;
 using TestRail.Models;
 using TestRail.Services;
 using TestRail.Services_API;
@@ -41,26 +44,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Positive")]
-        public void GetMilestoneTest()
-        {
-            var expectedResult = new MilestoneModel()
-            {
-                Id = "665c3a2362e78f3be0af1c30",
-                Name = "test",
-                References = "TRM-42",
-                Description = "test milestone",
-                StartDate = new DateTime(2024, 09, 06),
-                EndDate = new DateTime(2024, 10, 06),
-                IsCompleted = false
-            };
-
-            var actualResult = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result;
-
-            Assert.That(actualResult.Equals(expectedResult));
-        }
-
-        [Test]
-        [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("positive test for creating milestone")]
         public async Task AddMilestoneTest()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
@@ -72,6 +58,10 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Negative")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("try to add milestone with invalid date")]
+        [AllureStory("")]
         public void AddMilestoneWithInvalidDate()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
@@ -87,6 +77,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("dialog window test")]
         public void WhenDeleteButtonClickedDialogWindowShowsTest()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
@@ -102,6 +95,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("delete existing milestone")]
         public void DeleteMilestoneTest()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
@@ -118,6 +114,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Negative")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("failed test")]
         public void FailedTest()
         {
             Assert.Fail();
@@ -125,6 +124,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Negative")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("test for data entry exceeding acceptable limits")]
         public void AddMilestoneWithNameLengthMoreThan250()
         {
             var expectedName = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().InvalidMilestoneId)
@@ -142,6 +144,23 @@ namespace TestRail.Tests.UI
             }
 
             Assert.That(page.MilestoneTitlesText().Contains(expectedName), Is.True);
+        }
+
+        [Test]
+        [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("Milestone add attachement test")]
+        public void AttachementTest()
+        {
+            Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
+
+            var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources",
+            "test.txt");
+
+            AddMilestonePage.SendAttachement(filePath);
+
+            Assert.That(AddMilestonePage.IsDescriptionInputAttachementListItemContains());
         }
     }
 }

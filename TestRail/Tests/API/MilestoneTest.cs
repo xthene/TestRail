@@ -1,4 +1,6 @@
-﻿using NLog;
+﻿using Allure.Net.Commons;
+using Allure.NUnit.Attributes;
+using NLog;
 using RestSharp;
 using System.Net;
 using TestRail.Models;
@@ -35,6 +37,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("create milestone")]
         public void CreateMilestone()
         {
             const string endPoint = "index.php?/api/v2/add_milestone/{project_id}";            
@@ -52,6 +57,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("get created milestone by project id")]
         public void GetMilestoneByProject()
         {
             const string endPoint = "index.php?/api/v2/get_milestones/{project_id}";
@@ -73,6 +81,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("get created milestone by id")]
         public void GetMilestoneById()
         {
             const string endPoint = "index.php?/api/v2/get_milestone/{milestone_id}";
@@ -94,6 +105,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Negative")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("get deleted milestone by id")]
         public void GetRemovedMilestoneById()
         {
             const string endPoint = "index.php?/api/v2/get_milestone/{milestone_id}";
@@ -113,6 +127,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("delete emilestone")]
         public void RemoveMilestone()
         {
             const string endPoint = "index.php?/api/v2/delete_milestone/{milestone_id}";

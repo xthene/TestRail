@@ -1,5 +1,5 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using Allure.Net.Commons;
+using Allure.NUnit.Attributes;
 using TestRail.Connector;
 using TestRail.Models;
 using TestRail.Steps;
@@ -27,6 +27,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("check limit values of project name field with 1 symbol")]
         public void CheckLimitValuesProjectNameField_1Symbol()
         {
             var name = DataHelper.CreateStringByLength(1);
@@ -40,6 +43,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("check limit values of project name field with 250 symbols")]
         public void CheckLimitValuesProjectNameField_250Symbols()
         {
             var name = DataHelper.CreateStringByLength(250);
@@ -53,6 +59,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Negative")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("test project name field with a value exceeding the acceptable value")]
         public void CheckLimitValuesProjectNameField_251Symbols()
         {
             var name = DataHelper.CreateStringByLength(251);

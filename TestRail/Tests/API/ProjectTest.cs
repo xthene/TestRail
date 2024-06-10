@@ -1,4 +1,6 @@
-﻿using NLog;
+﻿using Allure.Net.Commons;
+using Allure.NUnit.Attributes;
+using NLog;
 using RestSharp;
 using System.Net;
 using TestRail.Models;
@@ -24,6 +26,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("create project")]
         public void CreateProject()
         {
             const string endPoint = "index.php?/api/v2/add_project";
@@ -43,6 +48,9 @@ namespace TestRail.Tests.API
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("API tests")]
+        [AllureDescription("delete project")]
         public void DeleteProject()
         {
             const string _endPoint = "index.php?/api/v2/delete_project/{project_id}";

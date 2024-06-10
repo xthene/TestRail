@@ -1,4 +1,6 @@
-﻿using TestRail.Models;
+﻿using Allure.Net.Commons;
+using Allure.NUnit.Attributes;
+using TestRail.Models;
 using TestRail.Utils;
 
 namespace TestRail.Tests.UI
@@ -20,6 +22,9 @@ namespace TestRail.Tests.UI
 
         [Test]
         [Category("Positive")]
+        [AllureSeverity(SeverityLevel.normal)]
+        [AllureSuite("UI tests")]
+        [AllureDescription("check that after click by in prohress message link shows message")]
         public void CheckInProgressMessageTest()
         {
             TopPage.InProgressLinkClick();
