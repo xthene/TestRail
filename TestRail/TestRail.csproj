@@ -21,9 +21,6 @@
     <Content Include="appSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include=".env">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="allureConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
