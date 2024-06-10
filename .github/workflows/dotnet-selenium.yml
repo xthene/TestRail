@@ -2,16 +2,14 @@ name: Selenium and API tests
 run-name: Run ${{ github.event.inputs.test_category }} tests
 
 on:
-  schedule:
-  - cron: '00 20 * * *'
   workflow_dispatch:
    inputs:
     test_category:
      description: 'Select test category'
      type: choice
      options:
-     - Positive
-     - Negative
+     - API
+     - UI
      required: true
   
 
@@ -38,13 +36,13 @@ jobs:
         dotnet-version: 8.0.x
 
     # Execute all unit tests in the solution
-    - name: Execute Positive tests
-      if: github.event.inputs.test_category == 'Positive'
-      run: dotnet test --filter Category=Positive
+    - name: Execute API tests
+      if: github.event.inputs.test_category == 'API'
+      run: dotnet test --filter Category=API
       
-    - name: Execute Negative tests
-      if: github.event.inputs.test_category == 'Negative'
-      run: dotnet test --filter Category=Negative
+    - name: Execute UI tests
+      if: github.event.inputs.test_category == 'UI'
+      run: dotnet test --filter Category=UI
 
     - name: Load test report history
       uses: actions/checkout@v3
@@ -60,7 +58,7 @@ jobs:
       with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: WebDriverProject/bin/Debug/net6.0/allure-results
+          allure_results: WebDriverProject/bin/Debug/net8.0/allure-results
 
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v3
