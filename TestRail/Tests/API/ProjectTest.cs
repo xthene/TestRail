@@ -5,7 +5,6 @@ using RestSharp;
 using System.Net;
 using TestRail.Models;
 using TestRail.Services;
-using TestRail.Services_API;
 using TestRail.Utils;
 
 namespace TestRail.Tests.API
