@@ -45,7 +45,7 @@ jobs:
       if: github.event.inputs.test_category == 'UI'
       run: dotnet test --filter Category=UI
 
-    - name: Execute UI tests
+    - name: Execute Failed test
       if: github.event.inputs.test_category == 'Failed'
       run: dotnet test --filter Category=Failed
 
