@@ -15,7 +15,7 @@ namespace TestRail.Core
             chromeOptions.AddArgument("--headless");
             chromeOptions.AddArgument("--disable-extensions");
             chromeOptions.AddArgument("--disable-gpu");
-            chromeOptions.AddArgument("--remote-debugging-pipe");
+            //chromeOptions.AddArgument("--remote-debugging-pipe");
 
             new DriverManager().SetUpDriver(new ChromeConfig());
             return new ChromeDriver(chromeOptions);
