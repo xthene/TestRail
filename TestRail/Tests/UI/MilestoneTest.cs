@@ -2,8 +2,8 @@
 using Allure.NUnit.Attributes;
 using NLog;
 using System.Reflection;
+using System.Text.Json;
 using TestRail.Models;
-using TestRail.Services;
 using TestRail.Services_API;
 using TestRail.Utils;
 
@@ -14,17 +14,13 @@ namespace TestRail.Tests.UI
     public class MilestoneTest : BaseTest
     {
         private Logger _logger = LogManager.GetCurrentClassLogger();
-        private MilestoneService _milestoneService;
-        private ProjectService _projectService;
         private string _projectId;
         
         [SetUp]
         public void SetUp()
-        {            
-            _milestoneService = new MilestoneService();
-            _projectService = new ProjectService();
-
-            var expectedProject = _projectService.GetProjectById(Configurator.ReadConfiguration().TestProjectId).Result;
+        {
+            using FileStream fs = new FileStream(@"Resources/project.json", FileMode.Open);
+            var expectedProject = JsonSerializer.Deserialize<ProjectModel>(fs);
 
             _projectId = ApiSteps.CreateProjectAndReturnId(expectedProject);
 
@@ -47,12 +43,14 @@ namespace TestRail.Tests.UI
         [AllureSeverity(SeverityLevel.normal)]
         [AllureSuite("UI tests")]
         [AllureDescription("positive test for creating milestone")]
-        public async Task AddMilestoneTest()
+        public void AddMilestoneTest()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
 
-            Assert.That(MilestoneStep.SuccessfullAddMilestone(
-                _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result).MessageSuccessText,
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
+
+            Assert.That(MilestoneStep.SuccessfullAddMilestone(milestone).MessageSuccessText,
                 Is.EqualTo("Successfully added the new milestone."));
         }
 
@@ -65,8 +63,10 @@ namespace TestRail.Tests.UI
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
 
-            var page = MilestoneStep.AddMilestoneWithInvalidDate(
-                _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result);
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
+
+            var page = MilestoneStep.AddMilestoneWithInvalidDate(milestone);
 
             var actualText = page.MessageErrorText();
 
@@ -82,8 +82,11 @@ namespace TestRail.Tests.UI
         public void WhenDeleteButtonClickedDialogWindowShowsTest()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
-            MilestoneStep.SuccessfullAddMilestone(_milestoneService.GetMilestoneById(
-                Configurator.ReadConfiguration().TestMilestoneId).Result);
+
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
+
+            MilestoneStep.SuccessfullAddMilestone(milestone);
 
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/overview/{_projectId}");
             MilestonesPage.DeleteButtonClick();
@@ -100,8 +103,11 @@ namespace TestRail.Tests.UI
         public void DeleteMilestoneTest()
         {
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
-            MilestoneStep.SuccessfullAddMilestone(_milestoneService.GetMilestoneById(
-                Configurator.ReadConfiguration().TestMilestoneId).Result);
+
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
+
+            MilestoneStep.SuccessfullAddMilestone(milestone);
 
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/overview/{_projectId}");
 
@@ -128,13 +134,14 @@ namespace TestRail.Tests.UI
         [AllureDescription("test for data entry exceeding acceptable limits")]
         public void AddMilestoneWithNameLengthMoreThan250()
         {
-            var expectedName = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().InvalidMilestoneId)
-                .Result.Name.Substring(0, 250);
+            using FileStream fs = new FileStream(@"Resources/invalidMilestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
+
+            var expectedName = milestone.Name.Substring(0, 250);
 
             Driver.Navigate().GoToUrl(Configurator.ReadConfiguration().Url + $"index.php?/milestones/add/{_projectId}");
 
-            var page = MilestoneStep.SuccessfullAddMilestone(
-                _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().InvalidMilestoneId).Result);
+            var page = MilestoneStep.SuccessfullAddMilestone(milestone);
 
             _logger.Log(LogLevel.Info, expectedName);
             foreach(var text in page.MilestoneTitlesText())

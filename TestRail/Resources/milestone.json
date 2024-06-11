@@ -1,0 +1,11 @@
+{
+  "_id": {
+    "$oid": "6667eb7c6785b0580cd769fc"
+  },
+  "Description": "test milestone",
+  "EndDate": "2024-06-20T00:00:00.000Z",
+  "IsCompleted": false,
+  "Name": "test",
+  "References": "TMS-42",
+  "StartDate": "2024-06-09T00:00:00.000Z"
+}

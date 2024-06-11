@@ -1,0 +1,11 @@
+{
+  "_id": {
+    "$oid": "6667eb006785b0580cd769fa"
+  },
+  "Announcement": "Test Announcement",
+  "DefaultAccessRole": "Global Role",
+  "IsShowAnnouncement": true,
+  "Name": "ESiniakTestProject",
+  "ProjectType": 2,
+  "IsEnableTestCase": true
+}

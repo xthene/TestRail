@@ -8,9 +8,9 @@ on:
      description: 'Select test category'
      type: choice
      options:
+     - All
      - API
      - UI
-     - Failed
      required: true
   
 
@@ -37,6 +37,10 @@ jobs:
         dotnet-version: 8.0.x
 
     # Execute all unit tests in the solution
+    - name: Execute All test
+      if: github.event.inputs.test_category == 'All'
+      run: dotnet test
+
     - name: Execute API tests
       if: github.event.inputs.test_category == 'API'
       run: dotnet test --filter Category=API
@@ -44,10 +48,6 @@ jobs:
     - name: Execute UI tests
       if: github.event.inputs.test_category == 'UI'
       run: dotnet test --filter Category=UI
-
-    - name: Execute Failed test
-      if: github.event.inputs.test_category == 'Failed'
-      run: dotnet test --filter Category=Failed
 
     - name: Load test report history
       uses: actions/checkout@v3

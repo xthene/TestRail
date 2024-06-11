@@ -3,6 +3,7 @@ using Allure.NUnit.Attributes;
 using NLog;
 using RestSharp;
 using System.Net;
+using System.Text.Json;
 using TestRail.Models;
 using TestRail.Services;
 using TestRail.Utils;
@@ -14,17 +15,14 @@ namespace TestRail.Tests.API
     public class MilestoneTest : BaseApiTest
     {
         private Logger _logger = LogManager.GetCurrentClassLogger();
-        private ProjectService _projectService;
-        private MilestoneService _milestoneService;
         private string projectId;
         private string milestoneId;
 
         [SetUp]
         public void SetUp()
         {
-            _projectService = new ProjectService();
-            _milestoneService = new MilestoneService();
-            var expectedProject = _projectService.GetProjectById(Configurator.ReadConfiguration().TestProjectId).Result;
+            using FileStream fs = new FileStream(@"Resources/project.json", FileMode.Open);
+            var expectedProject = JsonSerializer.Deserialize<ProjectModel>(fs);
 
             projectId = ApiSteps.CreateProjectAndReturnId(expectedProject);
         }
@@ -42,9 +40,10 @@ namespace TestRail.Tests.API
         [AllureDescription("create milestone")]
         public void CreateMilestone()
         {
-            const string endPoint = "index.php?/api/v2/add_milestone/{project_id}";            
+            const string endPoint = "index.php?/api/v2/add_milestone/{project_id}";
 
-            var milestone = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result;
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
 
             var request = new RestRequest(endPoint).AddJsonBody(milestone);
             request.AddUrlSegment("project_id", projectId);
@@ -64,7 +63,8 @@ namespace TestRail.Tests.API
         {
             const string endPoint = "index.php?/api/v2/get_milestones/{project_id}";
 
-            var milestone = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result;
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
             ApiSteps.CreateMilestoneAndReturnId(milestone, projectId);
 
             var request = new RestRequest(endPoint).AddUrlSegment("project_id", projectId);
@@ -88,7 +88,8 @@ namespace TestRail.Tests.API
         {
             const string endPoint = "index.php?/api/v2/get_milestone/{milestone_id}";
 
-            var milestone = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result;
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
             milestoneId = ApiSteps.CreateMilestoneAndReturnId(milestone, projectId);
 
             var request = new RestRequest(endPoint).AddUrlSegment("milestone_id", milestoneId);
@@ -112,7 +113,8 @@ namespace TestRail.Tests.API
         {
             const string endPoint = "index.php?/api/v2/get_milestone/{milestone_id}";
 
-            var milestone = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result;
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
             milestoneId = ApiSteps.CreateMilestoneAndReturnId(milestone, projectId);
 
             ApiSteps.DeleteMilestoneById(milestoneId);
@@ -134,7 +136,8 @@ namespace TestRail.Tests.API
         {
             const string endPoint = "index.php?/api/v2/delete_milestone/{milestone_id}";
 
-            var milestone = _milestoneService.GetMilestoneById(Configurator.ReadConfiguration().TestMilestoneId).Result;
+            using FileStream fs = new FileStream(@"Resources/milestone.json", FileMode.Open);
+            var milestone = JsonSerializer.Deserialize<MilestoneModel>(fs);
             milestoneId = ApiSteps.CreateMilestoneAndReturnId(milestone, projectId);
 
             var request = new RestRequest(endPoint).AddUrlSegment("milestone_id", milestoneId); ;

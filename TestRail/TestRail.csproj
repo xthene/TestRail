@@ -13,6 +13,9 @@
     <None Remove=".env" />
     <None Remove="allureConfig.json" />
     <None Remove="NLog.config" />
+    <None Remove="Resources\invalidMilestone.json" />
+    <None Remove="Resources\milestone.json" />
+    <None Remove="Resources\project.json" />
     <None Remove="Resources\test.txt" />
   </ItemGroup>
 
@@ -22,6 +25,15 @@
     </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\invalidMilestone.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\milestone.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\test.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

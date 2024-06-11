@@ -1,11 +1,11 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
+using System.Text.Json;
 using NLog;
 using RestSharp;
 using System.Net;
 using TestRail.Models;
 using TestRail.Services;
-using TestRail.Utils;
 
 namespace TestRail.Tests.API
 {
@@ -14,14 +14,7 @@ namespace TestRail.Tests.API
     public class ProjectTest : BaseApiTest
     {
         private Logger _logger = LogManager.GetCurrentClassLogger();
-        private ProjectService _projectService;
         private string _createdProjectId = "";
-
-        [SetUp]
-        public void Setup()
-        {
-            _projectService = new ProjectService();
-        }
 
         [Test]
         [Category("Positive")]
@@ -32,7 +25,8 @@ namespace TestRail.Tests.API
         {
             const string endPoint = "index.php?/api/v2/add_project";
 
-            var expectedProject = _projectService.GetProjectById(Configurator.ReadConfiguration().TestProjectId).Result;
+            using FileStream fs = new FileStream(@"Resources/project.json", FileMode.Open);
+            var expectedProject = JsonSerializer.Deserialize<ProjectModel>(fs);
 
             var request = new RestRequest(endPoint).AddJsonBody(expectedProject);
             var response = Client.ExecutePost<ProjectModel>(request);

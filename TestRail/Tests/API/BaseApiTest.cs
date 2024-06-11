@@ -6,7 +6,6 @@ using TestRail.Services_API;
 namespace TestRail.Tests.API
 {
     [AllureNUnit]
-    [Parallelizable(ParallelScope.Fixtures)]
     public class BaseApiTest
     {
         protected ApiServices ApiServices { get; private set; }
