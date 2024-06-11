@@ -39,7 +39,6 @@ namespace TestRail.Tests.UI
         }
 
         [SetUp]
-        [AllureBefore("Set up driver")]
         public void Setup()
         {
             Driver = new Browser().Driver;
